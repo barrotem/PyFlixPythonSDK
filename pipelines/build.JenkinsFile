@@ -13,6 +13,7 @@ pipeline {
             steps {
             withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USERNAME')]) {
                     sh '''
+                       echo ${NEXUS_USERNAME}:${NEXUS_PASSWORD}
                        python3 -m venv venv
                        . venv/bin/activate
 
