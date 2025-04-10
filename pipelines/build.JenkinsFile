@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'general' //Run on 'general' agents - dummy#3
+        label 'general' //Run on 'general' agents - dummy#5
     }
     environment {
         NEXUS_CREDENTIALS_ID = "nexus"
