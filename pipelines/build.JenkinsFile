@@ -2,6 +2,9 @@ pipeline {
     agent {
         label 'general' //Run on 'general' agents - dummy#5
     }
+    triggers {
+        githubPush()   // trigger the pipeline upon push event in github
+    }
     environment {
         NEXUS_CREDENTIALS_ID = "nexus"
         NEXUS_URL = "nexus:8081"
@@ -9,6 +12,7 @@ pipeline {
         DEV_HOSTED_REPO_NAME = "py-dev"
     }
     stages {
+        // This pipeline doesnt work and was abandoned for more important subjects
         stage('Install Dependencies') {
             steps {
                 withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USERNAME')]) {
