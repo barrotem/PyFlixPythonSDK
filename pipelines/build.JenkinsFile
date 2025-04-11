@@ -11,9 +11,12 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-            withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USERNAME')]) {
                     sh '''
                        echo ${NEXUS_USERNAME}:${NEXUS_PASSWORD}
+                    '''
+                   }
+                    sh '''
                        python3 -m venv venv
                        . venv/bin/activate
 
@@ -21,7 +24,6 @@ pipeline {
                        NEXUS_PYPI_URL="http://${NEXUS_USERNAME}:${NEXUS_PASSWORD}@${NEXUS_URL}/repository/${GROUP_REPO_NAME}/simple"
                        pip install --trusted-host ${NEXUS_URL} --index-url ${NEXUS_PYPI_URL}  -r requirements.txt
                     '''
-                }
             }
         }
         stage('Run Unittest') {
